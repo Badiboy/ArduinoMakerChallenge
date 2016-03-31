@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzBrowzer", "AzBrowzer\AzBrowzer.csproj", "{FAF0147D-9F87-43D9-899E-38FE2EA3C72F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FAF0147D-9F87-43D9-899E-38FE2EA3C72F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAF0147D-9F87-43D9-899E-38FE2EA3C72F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAF0147D-9F87-43D9-899E-38FE2EA3C72F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAF0147D-9F87-43D9-899E-38FE2EA3C72F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
