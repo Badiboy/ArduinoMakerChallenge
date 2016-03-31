@@ -1,0 +1,94 @@
+﻿<Page
+    x:Class="test_project.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:test_project"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Width="569" Height="320" 
+    >
+    <Page.Resources>
+        <!-- button default color -->
+        <SolidColorBrush x:Key="btnFill" Color="Black"/>
+
+        <!-- button style -->
+        <!--<Style TargetType="{x:Type Polygon}" x:Key="polyStyle">
+            <Setter Property="StrokeThickness" Value="4"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+        </Style>-->
+
+    </Page.Resources>
+    <Grid PointerReleased="allPointerReleased"
+        Width="569" Height="320"   HorizontalAlignment="Center" VerticalAlignment="Center">
+
+        <Image Source="ms-appx:///Resources/rc.png" Stretch="UniformToFill" Margin="0,-70" />
+
+        <Rectangle Fill="Transparent" Stroke="Transparent" 
+                   PointerPressed="upRectanglePressed"
+                   PointerReleased="upRectangleReleased" Margin="0,0,281,161"/>
+        <Rectangle Fill="Transparent" Stroke="Transparent" Margin="0,174,281,-13" 
+                   PointerPressed="downRectanglePressed"
+                   PointerReleased="downRectangleReleased"/>
+        <Rectangle Fill="Transparent" Stroke="Transparent" Margin="293,0,117,10"  
+                   PointerPressed="leftRectanglePressed"
+                   PointerReleased="leftRectangleReleased"/>
+        <Rectangle Fill="Transparent" Stroke="Transparent" Margin="455,0,0,12" 
+                   PointerPressed="rightRectanglePressed"
+                   PointerReleased="rightRectangleReleased" RenderTransformOrigin="0.5,0.5">
+            <Rectangle.RenderTransform>
+                <CompositeTransform ScaleX="-1"/>
+            </Rectangle.RenderTransform>
+        </Rectangle>
+        <!-- buttons -->
+        <Polygon x:Name="polyDown" Points="0,0 41,38, 82,0" 
+                 Fill="Black" 
+                 Stroke="{StaticResource btnFill}" 
+                  StrokeThickness="4" HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 
+                 PointerPressed="downRectanglePressed"
+                 PointerReleased="downRectangleReleased" Margin="75,174,0,0">
+        
+        </Polygon>
+
+        <Polygon x:Name="polyUp" Points="0,0 41,-38, 82,0"
+                 Fill="Black"  
+                 Stroke="{StaticResource btnFill}" 
+                   StrokeThickness="4" HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 Margin="75,157,0,0"
+                  PointerPressed="upRectanglePressed"
+                 PointerReleased="upRectangleReleased"/>
+
+        <Polygon x:Name="polyLeft"
+                 Points="0,0 40, 38, 82,0" 
+                 Fill="Black" 
+                 Stroke="{StaticResource btnFill}" 
+                   StrokeThickness="4" HorizontalAlignment="Left"
+                 VerticalAlignment="Top" 
+                 Margin="447,122,0,0" UseLayoutRounding="False" d:LayoutRounding="Auto"
+                 PointerPressed ="leftRectanglePressed"
+                 PointerReleased="leftRectangleReleased">
+
+            <Polygon.RenderTransform>
+                <RotateTransform CenterX="0.5"  CenterY="0.5" Angle="90"/>
+            </Polygon.RenderTransform>
+        </Polygon>
+
+        <Polygon x:Name="polyRight"
+                 Points="0,0 40,-38, 82,0"
+                 Fill="Black" 
+                 Stroke="{StaticResource btnFill}" 
+                   StrokeThickness="4" HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 Margin="460,122,0,0" 
+                 PointerPressed="rightRectanglePressed"
+                 PointerReleased="rightRectangleReleased">
+
+            <Polygon.RenderTransform>
+                <RotateTransform CenterX="0.5"  CenterY="0.5" Angle="90"/>
+            </Polygon.RenderTransform>
+        </Polygon>
+    </Grid>
+</Page>

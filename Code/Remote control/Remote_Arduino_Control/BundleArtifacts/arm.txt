@@ -1,0 +1,2 @@
+MainPackage=P:\VVA\Studio\test_project\test_project\bin\ARM\Release\test_project_1.0.0.0_ARM.appx
+SymbolPackage=P:\VVA\Studio\test_project\222\test_project_1.0.0.0_Test\test_project_1.0.0.0_ARM.appxsym

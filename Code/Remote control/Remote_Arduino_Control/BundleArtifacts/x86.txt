@@ -1,0 +1,2 @@
+MainPackage=P:\VVA\Studio\test_project\test_project\bin\x86\Release\test_project_1.0.0.0_x86.appx
+SymbolPackage=P:\VVA\Studio\test_project\111\test_project_1.0.0.0_Test\test_project_1.0.0.0_x86.appxsym
