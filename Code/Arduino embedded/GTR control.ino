@@ -33,7 +33,12 @@ const int keyArray[6] = { -1, 4, 3, 4, 1, 2 };
 /* Timer variables */
 unsigned long currentMillis;        // Store the current value from millis()
 unsigned long previousMillis;       // For comparison with currentMillis
+unsigned long globalTimer;
 int samplingInterval = 19;          // Main loop interval (in ms)
+const int stopDelay = 150;
+const int gasDelay = 100;
+int neededDelay;
+int currentTime;
 
 unsigned long timer;				// Previous millis() value
 state carState;						// For autonomus mode only: current car state
@@ -580,8 +585,7 @@ void setup()
 	Firmata.attach(REPORT_DIGITAL, reportDigitalCallback);
 	Firmata.attach(SET_PIN_MODE, setPinModeCallback);
 	Firmata.attach(START_SYSEX, sysexCallback);
-	//Firmata.begin(9600);
-
+	Firmata.begin(9600);
 	/* GTR Part setup*/
 
 	//IR Line sensors
@@ -602,12 +606,12 @@ void setup()
 
 	stopper = false;		// At the beginning we dont't need in stop function
 	carMode = gamepad;		// At the beginning we control car by gamepad
-	carState = forward;		// Initial car state in autonommus mode
+	carState = forward;		// Initial car state in move forward mode
 	numberOfKey = 0;
-
-	Serial.begin(9600);
+  globalTimer = millis();
 
 	// If we have no ultrasonic - we have never any barriers
+  barrierAhead = 1;
 #ifndef ULTRASONIC_INCLUDE
 	barrierAhead = 1;
 #endif //ULTRASONIC_INCLUDE
@@ -619,7 +623,7 @@ void setup()
 //L-Left, R-Right, U-Up, D-Down
 //Swithing to mobile control: L R L U D R
 //Swithing to gamepad control: L R L U D L
-//Swithing to mobile control: L R L U D U
+//Swithing to auto control: L R L U D U
 void modeSwitcher() {
 
 	keyValue = digitalRead(buttonForward) + digitalRead(buttonBack) * 2 + digitalRead(buttonRight) * 3 + digitalRead(buttonLeft) * 4;
@@ -650,6 +654,11 @@ void modeSwitcher() {
 
 //In gamepad controlling mode we directly control car considering barriers. 
 void modeGamepad() {
+  Serial.print(digitalRead(buttonForward));
+  Serial.print(digitalRead(buttonBack));
+  Serial.print(digitalRead(buttonLeft));
+  Serial.print(digitalRead(buttonRight));
+  Serial.println();
 	digitalWrite(gas, digitalRead(buttonForward) * barrierAhead);
 	digitalWrite(stop, digitalRead(buttonBack));
 	digitalWrite(rightRotate, digitalRead(buttonRight));
@@ -692,8 +701,8 @@ void stopDriving() {
 #ifdef ULTRASONIC_INCLUDE
 //Function to detect a barrier at a distance of no more than 30cm
 void isBarrier() {
-	Serial.println(ultrasonic.Ranging(CM));
-	if (ultrasonic.Ranging(CM) < 30) {
+  
+	if (ultrasonic.Ranging(CM) < 40) {
 		barrierAhead = 0;
 		stopDriving();
 	}
@@ -704,10 +713,28 @@ void isBarrier() {
 }
 #endif 
 
+void customDelay() {
+  switch (digitalRead(gas)) {
+    case LOW: {
+      neededDelay = stopDelay;
+      break;
+    }
+    default:{
+      neededDelay = gasDelay;
+      break;
+    }
+  }
+  if (millis() - globalTimer > neededDelay) {   
+      globalTimer = millis();
+      digitalWrite(gas, !digitalRead(gas) * barrierAhead);
+  }
+}
+
 //Moving forward if there is no barrier
 void moveForward() {
-
-	digitalWrite(gas, HIGH * barrierAhead);
+  
+  customDelay();
+  
 	if (!digitalRead(leftSideWatch)) {
 		carState = left;
 	}
@@ -727,11 +754,7 @@ void moveLeft()
 		isBarrier();
 #endif
 		// Move left with delay to reduce speed
-		if (millis() - timer > 200)
-		{
-			timer = millis();
-			digitalWrite(gas, !digitalRead(gas) * barrierAhead);
-		}
+    customDelay();
 		modeSwitcher();
 	}
 	digitalWrite(gas, HIGH * barrierAhead);
@@ -744,7 +767,6 @@ void moveRight()
 {
 
 	digitalWrite(rightRotate, HIGH);
-	timer = millis();
 	// Move Right until left sensor has crossed the line
 	while (digitalRead(leftSideWatch) && !carMode)
 	{
@@ -752,11 +774,7 @@ void moveRight()
 		isBarrier();
 #endif
 		// Move right with delay to reduce speed
-		if (millis() - timer > 200)
-		{
-			timer = millis();
-			digitalWrite(gas, !digitalRead(gas) * barrierAhead);
-		}
+    customDelay();
 		modeSwitcher();
 	}
 	digitalWrite(gas, HIGH * barrierAhead);
