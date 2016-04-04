@@ -13,13 +13,13 @@ namespace DeviceIndicator
     class Send
     {
         // The address of Azure IoT (Internet of Things) Hub
-        private const string IotHubUri = "ArduinoMakerChallenge.azure-devices.net";
+        private const string IotHubUri = "xxx.azure-devices.net";
 
         // The name of first device (????)
         private const string DeviceId1 = "BluetoothAtDevise3";
 
         // The password to the first device
-        private const string DeviceKey1 = "tgvXzErRTiPDZtsXclzaPg==";
+        private const string DeviceKey1 = "xxxxxxxxxxxxxxxxxxxxxxxx";
 
         // URL of a web-page depicting location of first device 
         private const string DeviceNavUrl1 = "http://www.purecreation.ru/suainav/index.html?&dst=2203";
@@ -28,7 +28,7 @@ namespace DeviceIndicator
         private const string DeviceId2 = "BluetoothAtVic";
 
         // The password to the second device
-        private const string DeviceKey2 = "Qol6JqJZSws7VwVu3N4WWQ==";
+        private const string DeviceKey2 = "xxxxxxxxxxxxxxxxxxxxxxxx";
 
         // URL of a web-page depicting location of second device 
         private const string DeviceNavUrl2 = "http://www.purecreation.ru/suainav/index.html?&dst=5233";
